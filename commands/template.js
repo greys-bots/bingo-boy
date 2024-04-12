@@ -1,6 +1,6 @@
 const { Models: { SlashCommand } } = require('frame');
 const { AttachmentBuilder } = require('discord.js');
-const { IMAGES, OFFSETS: { BOARD } } = require('../constants');
+const { IMAGES: { TEMPLATE }, OFFSETS: { BOARD } } = require('../constants');
 const Jimp = require('jimp');
 
 class Command extends SlashCommand {
