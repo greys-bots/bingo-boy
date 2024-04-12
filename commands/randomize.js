@@ -110,16 +110,16 @@ class Command extends SlashCommand {
 		
 		var buff = await placed.getBufferAsync(Jimp.MIME_PNG);
 		var att = new AttachmentBuilder(buff, { name: 'test.png' });
-		msg = await ctx.followUp({
+		var nmsg = await ctx.followUp({
 			content: `Here's your new board!`,
 			files: [att],
 			fetchReply: true
 		});
 
 		board.filled = [];
-		board.original = `${msg.channel.id}/${msg.id}`;
-		board.latest = `${msg.channel.id}/${msg.id}`;
-		await board.save()
+		board.original = `${nmsg.channel.id}/${nmsg.id}`;
+		board.latest = `${nmsg.channel.id}/${nmsg.id}`;
+		await board.save();
 		return;
 	}
 
