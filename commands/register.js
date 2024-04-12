@@ -30,7 +30,8 @@ class Command extends SlashCommand {
 			usage: [
 				"[name] [board] - Registers a bingo board"
 			],
-			permissions: ['ManageMessages']
+			permissions: ['ManageMessages'],
+			guildOnly: true
 		})
 		this.#bot = bot;
 		this.#stores = stores;

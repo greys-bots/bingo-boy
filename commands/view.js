@@ -23,7 +23,8 @@ class Command extends SlashCommand {
 				"[board] - Views a specific board"
 			],
 			ephemeral: true,
-			permissions: ['ManageMessages']
+			permissions: ['ManageMessages'],
+			guildOnly: true
 		})
 		this.#bot = bot;
 		this.#stores = stores;

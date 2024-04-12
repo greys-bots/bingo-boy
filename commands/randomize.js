@@ -27,7 +27,8 @@ class Command extends SlashCommand {
 			usage: [
 				"[board] - Randomizes a given board"
 			],
-			permissions: ['ManageMessages']
+			permissions: ['ManageMessages'],
+			guildOnly: true
 		})
 		this.#bot = bot;
 		this.#stores = stores;

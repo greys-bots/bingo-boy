@@ -20,7 +20,8 @@ class Command extends SlashCommand {
 				"- Deletes all registered boards",
 				"[board] - Deletes a specific board"
 			],
-			permissions: ['ManageMessages']
+			permissions: ['ManageMessages'],
+			guildOnly: true
 		})
 		this.#bot = bot;
 		this.#stores = stores;

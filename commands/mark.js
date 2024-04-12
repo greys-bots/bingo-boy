@@ -34,7 +34,8 @@ class Command extends SlashCommand {
 			usage: [
 				"[board] [coord] - Marks a spot on a given board"
 			],
-			permissions: ['ManageMessages']
+			permissions: ['ManageMessages'],
+			guildOnly: true
 		})
 		this.#bot = bot;
 		this.#stores = stores;
