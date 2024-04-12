@@ -1,6 +1,6 @@
 const { Models: { SlashCommand } } = require('frame');
 const { AttachmentBuilder } = require('discord.js');
-const { IMAGES, OFFSETS: { BOARD } } = require('../constants');
+const CONSTANTS = require('../constants');
 const Jimp = require('jimp');
 
 class Command extends SlashCommand {
@@ -21,7 +21,7 @@ class Command extends SlashCommand {
 	}
 
 	async execute(ctx) {
-		var att = new AttachmentBuilder(TEMPLATE.getBufferAsync(Jimp.MIME_PNG), {
+		var att = new AttachmentBuilder(await CONSTANTS.IMAGES.TEMPLATE.getBufferAsync(Jimp.MIME_PNG), {
 			name: 'template.png'
 		});
 
