@@ -2,7 +2,8 @@ const { Models: { SlashCommand } } = require('frame');
 const {
 	IMAGES,
 	OFFSETS: { BOARD },
-	LETTERS
+	LETTERS,
+	WINS
 } = require('../constants');
 const Jimp = require('jimp');
 const { AttachmentBuilder } = require('discord.js');
@@ -47,6 +48,7 @@ class Command extends SlashCommand {
 		
 		var coord = ctx.options.getString('coord')?.trim().toUpperCase();
 		if(!coord?.length == 2) return "A coordinate should look like `B2`, `G3`, etc";
+		if(board.filled?.includes(coord)) return "That space has already been filled!";
 		var parts = coord.split("");
 		parts[1] = parseInt(parts[1]);
 		if(
@@ -69,15 +71,69 @@ class Command extends SlashCommand {
 			opacityDest: 1
 		})
 
+		// check for wins
+		board.filled.push(coord);
+		var m = `Mark placed at ${coord}!`;
+		var nw = false;
+		if(!board.bingos) board.bingos = [];
+		for(var i = 0; i < WINS.length; i++) {
+			if(board.bingos?.includes(i)) continue;
+			var w = WINS[i];
+			var bc = w.filter(x => board.filled.includes(x));
+			if(bc?.length !== 5) continue;
+
+			nw = true;
+			board.bingos.push(i);
+			var cd;
+			var wimg;
+			if(board.bingos.length == 12) {
+				cd = { x: 0, y: 0 };
+
+				wimg = IMAGES.FULL;
+			} else if(i < 5) {
+				var p = w[0].split('');
+				cd = BOARD[p[0]][p[1]];
+
+				wimg = IMAGES.VERT;
+			} else if(i < 10) {
+				var p = w[0].split('');
+				cd = BOARD[p[0]][p[1]];
+
+				wimg = IMAGES.HORT;
+			} else if(i == 10) {
+				cd = { x: 0, y: 0 };
+
+				wimg = IMAGES.DIAG_TLBR;
+			} else if(i == 11) {
+				cd = { x: 0, y: 0 };
+
+				wimg = IMAGES.DIAG_BLTR;
+			}
+
+			placed = placed.composite(wimg, cd.x, cd.y, {
+				mode: Jimp.BLEND_SOURCE_OVER,
+				opacitySource: 1,
+				opacityDest: 1
+			})
+		}
+		
+		if(board.bingos?.length) {
+			if(nw) {
+				if(board.bingos.length == 12) m += `\n🎉 **This board is now totally full!** 🎉`;
+				else m += `\n**New bingo made!**`;
+			}
+			m += `\nCurrent bingo count: ${board.bingos.length}`;
+		}
+
+		// send image and get new message
 		var buff = await placed.getBufferAsync(Jimp.MIME_PNG);
 		var att = new AttachmentBuilder(buff, { name: 'test.png' });
 		msg = await ctx.followUp({
-			content: `Mark placed at ${coord}!`,
+			content: m,
 			files: [att],
 			fetchReply: true
 		});
 
-		board.filled.push(coord);
 		board.latest = `${msg.channel.id}/${msg.id}`;
 		await board.save()
 		return;

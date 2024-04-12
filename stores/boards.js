@@ -7,7 +7,8 @@ const KEYS = {
 	name: { patch: true },
 	original: { },
 	latest: { patch: true },
-	filled: { patch: true }
+	filled: { patch: true },
+	bingos: { patch: true }
 }
 
 class Board extends DataObject {	
@@ -29,7 +30,8 @@ class BoardStore extends DataStore {
 			name				TEXT,
 			original 			TEXT,
 			latest 				TEXT,
-			filled 				TEXT[]
+			filled 				TEXT[],
+			bingos				INTEGER[]
 		)`)
 	}
 
@@ -40,10 +42,11 @@ class BoardStore extends DataStore {
 				name,
 				original,
 				latest,
-				filled
-			) VALUES ($1,$2,$3,$4,$5)
+				filled,
+				bingos
+			) VALUES ($1,$2,$3,$4,$5,$6)
 			RETURNING id`,
-			[data.server_id, data.name, data.original, data.latest, data.filled]);
+			[data.server_id, data.name, data.original, data.latest, data.filled, data.bingos]);
 		} catch(e) {
 			console.log(e);
 	 		return Promise.reject(e.message);
@@ -59,10 +62,11 @@ class BoardStore extends DataStore {
 				name,
 				original,
 				latest,
-				filled
-			) VALUES ($1,$2,$3,$4,$5)
+				filled,
+				bingos
+			) VALUES ($1,$2,$3,$4,$5,$6)
 			RETURNING id`,
-			[data.server_id, data.name, data.original, data.latest, data.filled]);
+			[data.server_id, data.name, data.original, data.latest, data.filled, data.bingos]);
 		} catch(e) {
 			console.log(e);
 	 		return Promise.reject(e.message);
