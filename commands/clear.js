@@ -57,7 +57,7 @@ class Command extends SlashCommand {
 		)
 		if(conf.msg) return conf.msg;
 
-		var m = board.original.split('/');
+		var m = board.current.split('/');
 		var ch = await ctx.guild.channels.fetch(m[0]);
 		var omsg = await ch.messages.fetch(m[1]);
 		
@@ -68,7 +68,7 @@ class Command extends SlashCommand {
 		});
 
 		board.filled = [];
-		board.original = `${msg.channel.id}/${msg.id}`;
+		board.current = `${msg.channel.id}/${msg.id}`;
 		board.latest = `${msg.channel.id}/${msg.id}`;
 		await board.save()
 		return;

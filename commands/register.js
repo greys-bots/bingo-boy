@@ -69,6 +69,7 @@ class Command extends SlashCommand {
 			server_id: ctx.guild.id,
 			name,
 			original: `${msg.channel.id}/${msg.id}`,
+			current: `${msg.channel.id}/${msg.id}`,
 			latest: `${msg.channel.id}/${msg.id}`,
 			filled: [ ]
 		})

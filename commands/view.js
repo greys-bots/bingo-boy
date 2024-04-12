@@ -45,7 +45,8 @@ class Command extends SlashCommand {
 					return {
 						name: b.name,
 						value: (
-							`**Original post:** ${PREFIX}/${ctx.guild.id}/${b.original}\n` +
+							`**Original version:** ${PREFIX}/${ctx.guild.id}/${b.original}\n` +
+							`**Current clean version:** ${PREFIX}/${ctx.guild.id}/${b.current}\n` +
 							`**Latest post:** ${PREFIX}/${ctx.guild.id}/${b.latest}`
 						)
 					}
@@ -79,8 +80,12 @@ class Command extends SlashCommand {
 				title: board.name,
 				fields: [
 					{
-						name: "Original post",
+						name: "Original version",
 						value: `${PREFIX}/${ctx.guild.id}/${board.original}`
+					},
+					{
+						name: "Current clean version",
+						value: `${PREFIX}/${ctx.guild.id}/${board.current}`
 					},
 					{
 						name: "Latest post",

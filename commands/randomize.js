@@ -117,7 +117,7 @@ class Command extends SlashCommand {
 		});
 
 		board.filled = [];
-		board.original = `${nmsg.channel.id}/${nmsg.id}`;
+		board.current = `${nmsg.channel.id}/${nmsg.id}`;
 		board.latest = `${nmsg.channel.id}/${nmsg.id}`;
 		await board.save();
 		return;

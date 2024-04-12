@@ -6,6 +6,7 @@ const KEYS = {
 	server_id: { },
 	name: { patch: true },
 	original: { },
+	current: { patch: true },
 	latest: { patch: true },
 	filled: { patch: true },
 	bingos: { patch: true }
@@ -29,6 +30,7 @@ class BoardStore extends DataStore {
 			server_id 			TEXT,
 			name				TEXT,
 			original 			TEXT,
+			current 			TEXT,
 			latest 				TEXT,
 			filled 				TEXT[],
 			bingos				INTEGER[]
@@ -41,12 +43,13 @@ class BoardStore extends DataStore {
 				server_id,
 				name,
 				original,
+				current,
 				latest,
 				filled,
 				bingos
-			) VALUES ($1,$2,$3,$4,$5,$6)
+			) VALUES ($1,$2,$3,$4,$5,$6,$7)
 			RETURNING id`,
-			[data.server_id, data.name, data.original, data.latest, data.filled, data.bingos]);
+			[data.server_id, data.name, data.original, data.current ?? data.original, data.latest, data.filled, data.bingos]);
 		} catch(e) {
 			console.log(e);
 	 		return Promise.reject(e.message);
@@ -61,12 +64,13 @@ class BoardStore extends DataStore {
 				server_id,
 				name,
 				original,
+				current,
 				latest,
 				filled,
 				bingos
-			) VALUES ($1,$2,$3,$4,$5,$6)
+			) VALUES ($1,$2,$3,$4,$5,$6,$7)
 			RETURNING id`,
-			[data.server_id, data.name, data.original, data.latest, data.filled, data.bingos]);
+			[data.server_id, data.name, data.original, data.current ?? data.original, data.latest, data.filled, data.bingos]);
 		} catch(e) {
 			console.log(e);
 	 		return Promise.reject(e.message);
